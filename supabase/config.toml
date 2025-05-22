@@ -1,0 +1,6 @@
+[functions.prompts]
+env = [
+    "SUPABASE_URL",
+    "SUPABASE_SERVICE_ROLE_KEY"
+]
+verify_jwt = true

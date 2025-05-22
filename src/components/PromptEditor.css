@@ -1,0 +1,58 @@
+.prompt-editor {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    padding: 2rem;
+    margin: 2rem auto;
+    max-width: 640px;
+}
+
+.chat-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.chat-message {
+    padding: 1rem;
+    border-radius: 10px;
+    background: #f2f2f2;
+    max-width: 80%;
+}
+
+.user-msg {
+    background: #d0ebff;
+    align-self: flex-end;
+}
+
+.assistant-msg {
+    background: #eaeaea;
+    align-self: flex-start;
+}
+
+.input-container {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.input-container input {
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+}
+
+.input-container button {
+    padding: 0.75rem 1.25rem;
+    border-radius: 8px;
+    background-color: #0070f3;
+    color: #fff;
+    border: none;
+    font-weight: 500;
+    transition: background 0.2s ease;
+}
+
+.input-container button:hover {
+    background-color: #0059c1;
+}

@@ -1,0 +1,90 @@
+/* App.css */
+
+/* 🌐 Reset и базовая типографика */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body, #root {
+    height: 100%;
+    overflow-x: hidden;
+    font-family: system-ui, sans-serif;
+    background: #f7f9fc;
+    color: #111;
+    line-height: 1.5;
+}
+
+.app-container {
+    width: 100%;
+    overflow-x: visible;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 🔷 Layout */
+.editor-container {
+    display: grid;
+    grid-template-columns: 280px 1fr 400px;
+    height: calc(100vh - 64px);
+    background: #f7f9fc;
+}
+
+.prompt-editor-page {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+button {
+    cursor: pointer;
+    font: inherit;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background: #fff;
+    transition: background 0.2s;
+}
+
+button:hover {
+    background: #f0f0f0;
+}
+
+/* Левый сайдбар */
+.sidebar {
+    background: #fff;
+    padding: 16px;
+    overflow-y: auto;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.03);
+}
+
+/* Центральная зона */
+.prompt-editor {
+    background: #fff;
+    padding: 32px;
+    overflow-y: auto;
+    border-radius: 12px;
+    box-shadow: 0 0 0 1px #eee;
+    margin: 2rem;
+}
+
+/* Правый сайдбар */
+.prompt-settings {
+    background: #fff;
+    padding: 32px;
+    overflow-y: auto;
+    border-left: 1px solid #ddd;
+    border-radius: 12px 0 0 12px;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.03);
+    resize: horizontal;
+    min-width: 320px;
+    max-width: 600px;
+}
+
+/* Заголовки */
+h1, h2, h3 {
+    margin-bottom: 16px;
+}

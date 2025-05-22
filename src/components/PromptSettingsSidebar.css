@@ -1,0 +1,98 @@
+.settings-sidebar {
+    position: fixed;
+    top: 72px;
+    right: 0;
+    width: 350px;
+    height: calc(100vh - 72px);
+    z-index: 1000;
+    background: #fff;
+    border-left: 1px solid #ddd;
+    padding: 2rem;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    box-shadow: -2px 0 8px rgba(0,0,0,0.05);
+    border-radius: 16px 0 0 16px;
+}
+
+h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #555;
+    text-transform: uppercase;
+}
+
+input,
+textarea {
+    width: 100%;
+    font-size: 1rem;
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background: white;
+    resize: vertical;
+    line-height: 1.5;
+    margin-top: 0.25rem;
+}
+
+textarea {
+    min-height: 100px;
+    max-height: 300px;
+}
+
+.settings-section {
+    background: #fff;
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 0 0 1px #e0e0e0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.params-list {
+    padding-left: 1rem;
+    font-size: 0.95rem;
+}
+
+.no-params {
+    font-style: italic;
+    color: #999;
+}
+
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.sidebar-header h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.header-actions button {
+    background: none;
+    border: none;
+    font-size: 1.1rem;
+    margin-left: 0.5rem;
+    cursor: pointer;
+    color: #333;
+    transition: color 0.2s ease;
+}
+
+.header-actions button:hover {
+    color: #2f80ed;
+}

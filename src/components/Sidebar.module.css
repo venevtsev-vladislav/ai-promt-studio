@@ -1,0 +1,112 @@
+.sidebar {
+    position: fixed;
+    top: 72px;
+    left: 0;
+    width: 350px;
+    height: calc(100vh - 72px);
+    z-index: 1000;
+    background: #fff;
+    border-right: 1px solid #ccc;
+    padding: 1rem;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    border-radius: 0 16px 16px 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.2rem;
+}
+
+.toggleButton {
+    font-size: 1.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.promptList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.promptList li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.4rem 0.2rem;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+}
+
+.actions {
+    display: none;
+    gap: 0.5rem;
+}
+
+.promptList li:hover .actions {
+    display: flex;
+}
+
+.promptList li:hover {
+    background-color: #efefef;
+}
+
+.promptList li span {
+    flex-grow: 1;
+    margin-right: 0.5rem;
+    word-break: break-word;
+}
+
+.actions button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 0.2rem;
+}
+
+.addButton {
+    margin-top: 1rem;
+    padding: 0.5rem;
+    font-size: 1rem;
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.saveSection {
+    margin-top: 1rem;
+}
+
+.modalOverlay {
+    position: fixed;
+    top: 0; left: 0;
+    right: 0; bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+
+.modal {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    max-width: 300px;
+    width: 100%;
+    text-align: center;
+}
+
+.modalButtons button {
+    margin: 0 0.5rem;
+}
