@@ -60,8 +60,9 @@ const Sidebar: React.FC<SidebarProps> = ({
     return (
         <div className={styles.layout}>
             <aside className={`${styles.sidebar} ${collapsed ? styles.collapsed : ''}`}>
-                <div className={styles.header}>
+                <div className={styles.headerRow}>
                     <button className={styles.toggleButton} onClick={toggleSidebar}>☰</button>
+                    <button className={styles.addButton} onClick={onAddPrompt}>➕ Add Prompt</button>
                 </div>
                 <ul className={styles.promptList}>
                     {user ? (
@@ -81,7 +82,6 @@ const Sidebar: React.FC<SidebarProps> = ({
                         <li>{currentPrompt?.name || 'Без названия'}</li>
                     )}
                 </ul>
-                <button className={styles.addButton} onClick={onAddPrompt}>➕ Новый промт</button>
             </aside>
 
             {/* Модалка подтверждения */}

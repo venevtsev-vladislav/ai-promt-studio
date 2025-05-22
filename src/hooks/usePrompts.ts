@@ -29,11 +29,9 @@ export function usePrompts(userId: string | null) {
             let headers: Record<string, string> = {};
             let queryUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/prompts`;
 
-            if (userId) {
-                const token = (await supabase.auth.getSession()).data.session?.access_token;
-                if (token) headers['Authorization'] = `Bearer ${token}`;
-            } else {
-                queryUrl += '?type=default';
+            const token = (await supabase.auth.getSession()).data.session?.access_token;
+            if (token) {
+                headers['Authorization'] = `Bearer ${token}`;
             }
 
             const res = await fetch(queryUrl, { headers });
