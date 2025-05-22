@@ -6,7 +6,7 @@
     height: calc(100vh - 72px);
     z-index: 1000;
     background: #fff;
-    border-right: 1px solid #ccc;
+    border-right: 1px solid #ddd;
     padding: 1rem;
     overflow-y: auto;
     display: flex;
@@ -63,13 +63,13 @@
 }
 
 .promptList li:hover {
-    background-color: #fafafa;
-    border-left: 4px solid #10a37f;
+    background-color: #f8f9fa;
+    border-left: 4px solid #0070f3;
 }
 
 .promptList li.active {
-    background-color: #f0f0f0;
-    border-left: 4px solid #10a37f;
+    background-color: #f8f9fa;
+    border-left: 4px solid #0070f3;
 }
 
 .promptList li span {
@@ -125,4 +125,17 @@
 
 .modalButtons button {
     margin: 0 0.5rem;
+}
+
+.loader {
+    text-align: center;
+    color: #666;
+    font-size: 0.85rem;
+    padding: 0.5rem;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }

@@ -22,7 +22,7 @@ export function usePrompts(userId: string | null) {
     const [hasLoaded, setHasLoaded] = useState(false);
 
     const loadPrompts = async (force = false) => {
-        if (hasLoaded && !force) return;
+        if (hasLoaded && !force) return prompts;
         console.log('loadPrompts called');
         setLoading(true);
         try {
@@ -48,6 +48,7 @@ export function usePrompts(userId: string | null) {
             if (data.length > 0) {
                 setCurrentPrompt(data[0]); // 👈 выбираем первый промт
             }
+            return data;
         } catch (err) {
             console.error('Ошибка при загрузке промтов:', err);
         } finally {

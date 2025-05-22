@@ -66,8 +66,9 @@ textarea {
 }
 
 .no-params {
+    color: #888;
     font-style: italic;
-    color: #999;
+    margin-top: 0.5rem;
 }
 
 .sidebar-header {

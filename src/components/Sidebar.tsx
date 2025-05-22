@@ -18,6 +18,7 @@ interface SidebarProps {
     toggleSidebar: () => void;
     onAddPrompt: () => void;
     onDeletePrompt: (id: string | null) => void;
+    loading: boolean;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({
@@ -29,6 +30,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                                              toggleSidebar,
                                              onAddPrompt,
                                              onDeletePrompt,
+                                             loading,
                                          }) => {
     const [promptToDelete, setPromptToDelete] = useState<string | null>(null);
 
@@ -64,6 +66,9 @@ const Sidebar: React.FC<SidebarProps> = ({
                     <button className={styles.toggleButton} onClick={toggleSidebar}>☰</button>
                     <button className={styles.addButton} onClick={onAddPrompt}>➕ Add Prompt</button>
                 </div>
+                {loading && (
+                    <div className={styles.loader}>Loading prompts...</div>
+                )}
                 <ul className={styles.promptList}>
                     {user ? (
                         prompts.map((p) => (

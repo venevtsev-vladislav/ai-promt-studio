@@ -17,6 +17,7 @@ const PromptEditorPage: React.FC = () => {
         savePrompt,
         deletePrompt,
         addPrompt,
+        loading,
     } = usePrompts();
 
     const saveTimeout = useRef<NodeJS.Timeout | null>(null);
@@ -76,14 +77,15 @@ const PromptEditorPage: React.FC = () => {
 
     const handleDeletePrompt = async (id: string | null) => {
         if (!id) return;
-        const confirmed = window.confirm('Вы уверены, что хотите удалить этот промт?');
-        if (!confirmed) return;
 
         await deletePrompt(id);
-        await reload();
+        const updated = await reload(true); // force = true
 
-        const remaining = prompts.filter(p => p.id !== id);
-        setCurrentPrompt(remaining[0] || null);
+        if (updated?.length > 0) {
+            setCurrentPrompt(updated[0]);
+        } else {
+            setCurrentPrompt(null);
+        }
     };
 
     return (
@@ -100,6 +102,7 @@ const PromptEditorPage: React.FC = () => {
                     toggleSidebar={() => {}}
                     onAddPrompt={handleAddPrompt}
                     onDeletePrompt={handleDeletePrompt}
+                    loading={loading}
                 />
 
                 {currentPrompt && (

@@ -29,8 +29,8 @@ const PromptSettingsSidebar: React.FC<PromptSettingsSidebarProps> = ({ prompt, o
                 <h3>Run settings</h3>
                 <div className="header-actions">
                     <button onClick={onSave} title="Сохранить">💾</button>
-                    <button onClick={onReset} title="Сбросить">♻️</button>
-                    <button onClick={onClose} title="Закрыть">✖️</button>
+                    <button onClick={onReset} title="Сбросить">↺</button>
+                    <button onClick={onClose} title="Закрыть">×</button>
                 </div>
             </div>
 
