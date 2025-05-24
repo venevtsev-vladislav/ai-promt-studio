@@ -25,13 +25,20 @@ export function useAuth() {
     const [user, setUser] = useState<User | null>(null);
 
     useEffect(() => {
-        const accessToken = new URLSearchParams(window.location.search).get('access_token');
+        // Исправлено: получаем токены из window.location.hash
+        const params = new URLSearchParams(window.location.hash.substring(1));
+        const accessToken = params.get('access_token');
+        const refreshToken = params.get('refresh_token');
 
-        if (accessToken) {
+        if (accessToken && refreshToken) {
             supabase.auth.setSession({
                 access_token: accessToken,
-                refresh_token: '',
+                refresh_token: refreshToken,
+            }).then(({ data, error }) => {
+                console.log('Session set:', data, error);
             });
+            // Очищаем URL после получения токенов
+            window.history.replaceState({}, document.title, window.location.pathname);
         }
 
         const loadUser = async () => {
@@ -56,7 +63,7 @@ export function useAuth() {
             if (currentUser) {
                 (async () => {
                     await ensureUserInDB(currentUser);
-                })(); // обернуто в самовызывающуюся async-функцию
+                })();
             }
         });
 

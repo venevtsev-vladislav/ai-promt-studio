@@ -1,10 +1,8 @@
-// src/components/PromptEditor.tsx
 import React, { useState } from 'react';
 import './PromptEditor.css';
+import { supabase } from '../services/supabaseClient';
 
 interface PromptEditorProps {
-    user: any;
-    accessToken: string;
     prompt: { id: string | null; instruction: string };
     setPrompt: (prompt: any) => void;
 }
@@ -14,33 +12,56 @@ interface Message {
     content: string;
 }
 
-const PromptEditor: React.FC<PromptEditorProps> = ({ user, accessToken, prompt }) => {
+const PromptEditor: React.FC<PromptEditorProps> = ({ prompt }) => {
     const [query, setQuery] = useState<string>('');
     const [messages, setMessages] = useState<Message[]>([]);
+    const [loading, setLoading] = useState(false);
 
     const handleSend = async () => {
-        if (!query.trim()) return;
+        console.log('handleSend вызван!', { query });
+
+        if (!query.trim()) {
+            console.error('Пустой запрос');
+            return;
+        }
+
+        setLoading(true);
 
         try {
-            const response = await fetch('/api/edge-function-endpoint', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${accessToken}`
+            // Получаем accessToken из Supabase
+            const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+            const accessToken = session?.access_token;
+
+            if (!accessToken) {
+                console.error('Нет accessToken');
+                setMessages(prev => [...prev, { role: 'user', content: query }, { role: 'assistant', content: 'Ошибка авторизации' }]);
+                return;
+            }
+
+            // Вызов Edge Function (замени 'openai' на актуальное имя функции в Supabase)
+            const { data, error: funcError } = await supabase.functions.invoke('openai', {
+                headers: { Authorization: `Bearer ${accessToken}` },
+                body: {
+                    prompt: query,
+                    instruction: prompt.instruction,
+                    promptId: prompt.id,
                 },
-                body: JSON.stringify({ prompt: query })
             });
 
-            const data = await response.json();
-            if (response.ok && data.text) {
-                setMessages([...messages, { role: 'user', content: query }, { role: 'assistant', content: data.text }]);
-                setQuery('');
+            console.log('Ответ от invoke:', { data, funcError });
+
+            if (funcError || !data?.text) {
+                console.error('Ошибка invoke:', funcError);
+                setMessages(prev => [...prev, { role: 'user', content: query }, { role: 'assistant', content: 'Ошибка при получении ответа' }]);
             } else {
-                setMessages([...messages, { role: 'user', content: query }, { role: 'assistant', content: 'Ошибка при получении ответа' }]);
+                setMessages(prev => [...prev, { role: 'user', content: query }, { role: 'assistant', content: data.text }]);
+                setQuery('');
             }
-        } catch (error) {
-            console.error(error);
-            setMessages([...messages, { role: 'user', content: query }, { role: 'assistant', content: 'Ошибка запроса' }]);
+        } catch (err) {
+            console.error('Ошибка в try-catch:', err);
+            setMessages(prev => [...prev, { role: 'user', content: query }, { role: 'assistant', content: 'Ошибка запроса' }]);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -49,9 +70,9 @@ const PromptEditor: React.FC<PromptEditorProps> = ({ user, accessToken, prompt }
             <div className="preview-window">
                 <div className="preview-header">
                     <div className="window-controls">
-                        <span className="dot red"/>
-                        <span className="dot yellow"/>
-                        <span className="dot green"/>
+                        <span className="dot red" />
+                        <span className="dot yellow" />
+                        <span className="dot green" />
                     </div>
                     <span className="title">Превью ответа</span>
                 </div>
@@ -73,11 +94,9 @@ const PromptEditor: React.FC<PromptEditorProps> = ({ user, accessToken, prompt }
             </div>
             <div className="input-block">
                 <div className="input-attachments">
-                    {/* Добавь здесь компонент или иконку загрузки вложений */}
                     <span>📎 Вложения</span>
                 </div>
                 <div className="input-tags">
-                    {/* Здесь будут теги, можно позже реализовать */}
                     <span className="tag">Здесь будут теги, можно позже реализовать</span>
                 </div>
                 <div className="input-textarea-wrapper">
@@ -93,6 +112,7 @@ const PromptEditor: React.FC<PromptEditorProps> = ({ user, accessToken, prompt }
                         className="send-button"
                         onClick={handleSend}
                         title="Отправить"
+                        disabled={loading}
                     >
                         ➤
                     </button>
