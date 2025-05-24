@@ -2,7 +2,7 @@
     position: fixed;
     top: 72px;
     left: 0;
-    width: 350px;
+    width: 300px;
     height: calc(100vh - 72px);
     z-index: 1000;
     background: #fff;

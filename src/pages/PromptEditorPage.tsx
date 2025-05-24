@@ -1,3 +1,5 @@
+//PromptEditorPage.tsx
+
 import React, { useEffect, useRef, useState } from 'react';
 import isEqual from 'lodash.isequal';
 import { useAuth } from '../hooks/useAuth';
@@ -7,7 +9,7 @@ import Sidebar from '../components/Sidebar';
 import PromptEditor from '../components/PromptEditor';
 import PromptSettingsSidebar from '../components/PromptSettingsSidebar';
 
-const PromptEditorPage: React.FC = () => {
+const PromptEditorPage: React.FC<{session?: any}> = ({ session }) => {
     const { user } = useAuth();
     const {
         prompts,
@@ -129,7 +131,8 @@ const PromptEditorPage: React.FC = () => {
                     }}
                 >
                     <PromptEditor
-                        user={user}
+                        user={session?.user}
+                        accessToken={session?.access_token}
                         prompt={currentPrompt}
                         setPrompt={setCurrentPrompt}
                     />

@@ -1,3 +1,4 @@
+//App.tsx
 import React from 'react';
 import AppRouter from './AppRouter';
 
