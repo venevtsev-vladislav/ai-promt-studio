@@ -2,7 +2,7 @@
     position: fixed;
     top: 72px;
     left: 0;
-    width: 300px;
+    width: 280px;
     height: calc(100vh - 72px);
     z-index: 1000;
     background: #fff;
@@ -90,12 +90,33 @@
 }
 
 .addButton {
-    margin-top: 1rem;
-    padding: 0.5rem;
-    font-size: 1rem;
-    width: 100%;
-    border-radius: 8px;
-    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    padding: 0.35rem 0.6rem;
+    font-size: 0.85rem;
+    min-width: 120px;
+    max-width: 180px;
+    border-radius: 6px;
+    background-color: #2f80ed;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.addButton:hover {
+    background-color: #1a65d6;
+    transform: translateY(-1px);
+}
+
+.addButton:active {
+    transform: translateY(0);
 }
 
 .saveSection {

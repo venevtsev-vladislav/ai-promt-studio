@@ -6,8 +6,15 @@ interface Prompt {
     name: string;
     description: string;
     instruction: string;
+    goal?: string;
+    example_response?: string;
     temperature?: string;
     model?: string;
+    max_tokens?: string;
+    top_p?: string;
+    frequency_penalty?: string;
+    presence_penalty?: string;
+    stop_sequences?: string;
     parameters: { key: string; value: string; }[];
     tools?: {
         structured: boolean;
@@ -16,6 +23,8 @@ interface Prompt {
         search: boolean;
         url: boolean;
     };
+    tags?: string;
+    notes?: string;
 }
 
 interface PromptSettingsSidebarProps {
@@ -34,7 +43,7 @@ const PromptSettingsSidebar: React.FC<PromptSettingsSidebarProps> = ({ prompt, o
     return (
         <aside className="settings-sidebar">
             <div className="sidebar-header">
-                <h3>Run settings</h3>
+                <h3>Настройки промпта</h3>
                 <div className="header-actions">
                     <button onClick={onSave} title="Сохранить">💾</button>
                     <button onClick={onReset} title="Сбросить">↺</button>
@@ -42,69 +51,175 @@ const PromptSettingsSidebar: React.FC<PromptSettingsSidebarProps> = ({ prompt, o
                 </div>
             </div>
 
-            <label>Model</label>
-            <select value={prompt.model || 'gpt-4'} onChange={handleChange('model')}>
-                <option value="gpt-4">GPT-4</option>
-                <option value="gpt-3.5">GPT-3.5</option>
-            </select>
-
-            <label>Название *</label>
-            <input
+            {/* Основные поля */}
+            <div className="input-group">
+              <input
                 type="text"
+                placeholder=" "
                 value={prompt?.name || ''}
-                placeholder="Введите название промпта"
                 onChange={handleChange('name')}
-            />
+                required
+              />
+              <label>Name *</label>
+              <small>For example: "Summarize text", "Generate idea"</small>
+            </div>
 
-            <label>Описание</label>
-            <textarea
-                value={prompt?.description || ''}
-                placeholder="Описание (необязательно)"
-                onChange={handleChange('description')}
-                rows={3}
-            />
+            <div className="input-group">
+              <textarea
+                placeholder=" "
+                value={prompt.goal || ''}
+                onChange={handleChange('goal')}
+              ></textarea>
+              <label>Goal</label>
+              <small>Describe the purpose of this prompt. For example: "Summarize news articles".</small>
+            </div>
 
-            <label>Инструкция *</label>
-            <textarea
-                value={prompt?.instruction || ''}
-                placeholder="GPT будет использовать эту инструкцию как основу."
+            <div className="input-group">
+              <textarea
+                placeholder=" "
+                value={prompt.example_response || ''}
+                onChange={handleChange('example_response')}
+              ></textarea>
+              <label>Expected Answer</label>
+              <small>Give an example of a good response from the model.</small>
+            </div>
+
+            <div className="input-group">
+              <textarea
+                placeholder=" "
+                value={prompt.instruction || ''}
                 onChange={handleChange('instruction')}
-                rows={4}
-            />
+                required
+              ></textarea>
+              <label>Instruction *</label>
+              <small>Describe what the prompt should do. For example: "Summarize the input text".</small>
+            </div>
 
-            <label>Temperature</label>
-            <input
-                type="range"
-                min="0"
-                max="1"
-                step="0.01"
-                value={prompt.temperature || '0.7'}
-                onChange={handleChange('temperature')}
-            />
+            <div className="input-group">
+              <textarea
+                placeholder=" "
+                value={prompt.description || ''}
+                onChange={handleChange('description')}
+              ></textarea>
+              <label>Description</label>
+              <small>Optional: Add details for your reference.</small>
+            </div>
 
+            {/* Настройки генерации */}
             <details>
-                <summary>🧰 Tools</summary>
-                <label><input type="checkbox" checked={prompt.tools?.structured || false} onChange={(e) => onChange('tools.structured', String(e.target.checked))}/> Structured Output</label><br />
-                <label><input type="checkbox" checked={prompt.tools?.code || false} onChange={(e) => onChange('tools.code', String(e.target.checked))}/> Code Execution</label><br />
-                <label><input type="checkbox" checked={prompt.tools?.functions || false} onChange={(e) => onChange('tools.functions', String(e.target.checked))}/> Function Calling</label><br />
-                <label><input type="checkbox" checked={prompt.tools?.search || false} onChange={(e) => onChange('tools.search', String(e.target.checked))}/> Google Search</label><br />
-                <label><input type="checkbox" checked={prompt.tools?.url || false} onChange={(e) => onChange('tools.url', String(e.target.checked))}/> URL Context</label>
+                <summary>⚙️ Настройки генерации</summary>
+
+                <label>Модель</label>
+                <select value={prompt.model || 'gpt-4'} onChange={handleChange('model')}>
+                    <option value="gpt-4">GPT-4</option>
+                    <option value="gpt-3.5">GPT-3.5</option>
+                </select>
+
+                <label>Temperature</label>
+                <input
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.01"
+                    value={prompt.temperature || '0.7'}
+                    onChange={handleChange('temperature')}
+                />
+
+                <label>Max Tokens</label>
+                <input
+                    type="number"
+                    min="1"
+                    value={prompt.max_tokens || ''}
+                    placeholder="Максимальное количество токенов"
+                    onChange={handleChange('max_tokens')}
+                />
+
+                <label>Top P</label>
+                <input
+                    type="number"
+                    min="0"
+                    max="1"
+                    step="0.01"
+                    value={prompt.top_p || ''}
+                    placeholder="Вероятностный порог"
+                    onChange={handleChange('top_p')}
+                />
+
+                <label>Frequency Penalty</label>
+                <input
+                    type="number"
+                    min="0"
+                    max="2"
+                    step="0.01"
+                    value={prompt.frequency_penalty || ''}
+                    placeholder="Штраф за повторения"
+                    onChange={handleChange('frequency_penalty')}
+                />
+
+                <label>Presence Penalty</label>
+                <input
+                    type="number"
+                    min="0"
+                    max="2"
+                    step="0.01"
+                    value={prompt.presence_penalty || ''}
+                    placeholder="Штраф за появление новых тем"
+                    onChange={handleChange('presence_penalty')}
+                />
+
+                <label>Stop Sequences</label>
+                <input
+                    type="text"
+                    value={prompt.stop_sequences || ''}
+                    placeholder="Последовательности для остановки генерации"
+                    onChange={handleChange('stop_sequences')}
+                />
             </details>
 
-            <div>
-                <h4 style={{ marginBottom: '0.5rem' }}>🍀 Параметры генерации <small>(необязательно)</small></h4>
-                {Array.isArray(prompt?.parameters) && prompt.parameters.length > 0 ? (
-                    <ul className="params-list">
-                        {prompt.parameters.map((param, idx) => (
-                            <li key={idx}>
-                                <strong>{param.key}</strong>: {param.value}
-                            </li>
-                        ))}
-                    </ul>
-                ) : (
-                    <p className="no-params">Нет дополнительных параметров.</p>
-                )}
-            </div>
+            {/* Инструменты */}
+            <details>
+                <summary>🧰 Инструменты</summary>
+                <label>
+                    <input type="checkbox" checked={prompt.tools?.structured || false} onChange={(e) => onChange('tools.structured', String(e.target.checked))}/> Structured Output
+                    <button className="star-button" title="В избранное">⭐</button>
+                </label><br />
+                <label>
+                    <input type="checkbox" checked={prompt.tools?.code || false} onChange={(e) => onChange('tools.code', String(e.target.checked))}/> Code Execution
+                    <button className="star-button" title="В избранное">⭐</button>
+                </label><br />
+                <label>
+                    <input type="checkbox" checked={prompt.tools?.functions || false} onChange={(e) => onChange('tools.functions', String(e.target.checked))}/> Function Calling
+                    <button className="star-button" title="В избранное">⭐</button>
+                </label><br />
+                <label>
+                    <input type="checkbox" checked={prompt.tools?.search || false} onChange={(e) => onChange('tools.search', String(e.target.checked))}/> Google Search
+                    <button className="star-button" title="В избранное">⭐</button>
+                </label><br />
+                <label>
+                    <input type="checkbox" checked={prompt.tools?.url || false} onChange={(e) => onChange('tools.url', String(e.target.checked))}/> URL Context
+                    <button className="star-button" title="В избранное">⭐</button>
+                </label>
+            </details>
+
+
+            {/* Теги и заметки */}
+            <details>
+                <summary>🏷️ Теги и заметки</summary>
+                <label>Теги</label>
+                <input
+                    type="text"
+                    value={prompt.tags || ''}
+                    placeholder="Добавьте теги через запятую"
+                    onChange={handleChange('tags')}
+                />
+                <label>Заметки</label>
+                <textarea
+                    value={prompt.notes || ''}
+                    placeholder="Ваши заметки по промпту"
+                    onChange={handleChange('notes')}
+                    rows={3}
+                />
+            </details>
         </aside>
     );
 };

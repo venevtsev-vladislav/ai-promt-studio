@@ -2,112 +2,44 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    height: 100vh; /* Занимает весь экран */
+    height: 100vh;
     padding: 2rem;
-    box-shadow: none;
-    width: 100%; /* оставляет по 10px слева и справа */
+    box-sizing: border-box;
+    width: 100%;
 }
 
 .chat-container {
-    flex: 1 1 auto; /* Растягивается, занимая доступное пространство */
+    flex: 1 1 auto;
     display: flex;
     flex-direction: column;
-    gap: 1rem; /* Отступ между сообщениями */
+    gap: 1rem;
     overflow-y: auto;
-    margin-top: 0;
-    flex-grow: 1;
-    margin-bottom: 0;
+    margin: 0;
 }
 
 .chat-message {
     padding: 1rem;
     border-radius: 10px;
-    background: #f2f2f2; /* Светло-серый фон */
+    background: #f2f2f2;
     max-width: 80%;
 }
 
 .user-msg {
-    background: #d0ebff; /* Синий фон для сообщений пользователя */
-    align-self: flex-end; /* Выравнивание вправо */
+    background: #d0ebff;
+    align-self: flex-end;
 }
 
 .assistant-msg {
-    background: #eaeaea; /* Серый фон для сообщений GPT */
-    align-self: flex-start; /* Выравнивание влево */
+    background: #eaeaea;
+    align-self: flex-start;
 }
-
-.input-container {
-    position: absolute;
-    bottom: 20px;
-    left: var(--sidebar-left, 310px);
-    right: var(--settings-right, 360px);
-    height: 150px;
-    display: flex;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    background: transparent;
-    border-radius: 12px;
-    align-items: center;
-    padding: 0 1rem;
-}
-
-.input-container input {
-    padding: 0.75rem 1rem;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    font-size: 1rem;
-}
-
-.input-container button {
-    padding: 0.75rem 1.25rem;
-    border-radius: 8px;
-    background-color: #0070f3;
-    color: #fff;
-    border: none;
-    font-weight: 500;
-    transition: background 0.2s ease;
-}
-
-.input-container button:hover {
-    background-color: #0059c1;
-}
-
-.chat-textarea {
-    flex: 1; /* Занимает всё доступное пространство в input-container */
-    width: 100%; /* На случай падения flex */
-    height: 100%; /* Заполняет всю высоту родителя */
-    resize: none; /* Отключает ручное изменение размеров */
-    border: none;
-    padding: 1rem;
-    font-size: 1rem;
-    border-radius: 12px;
-    box-sizing: border-box; /* Учитывает padding внутри размера */
-}
-
-.send-button {
-    position: absolute; /* Размещается поверх textarea */
-    bottom: 1rem;
-    right: 1rem;
-    width: 48px;
-    height: 48px;
-    border-radius: 50%; /* Круглая */
-    background-color: #2f80ed; /* Синий фон */
-    color: #fff;
-    border: none;
-    font-size: 1.2rem;
-    cursor: pointer;
-}
-.send-button:hover {
-    background-color: #1a65d6; /* Тёмнее при наведении */
-}
-
 
 .preview-window {
     position: absolute;
-    top: 70px; /* перекрывает хэдер */
-    left: 310px;
+    top: 70px;
+    left: 290px;
     right: 360px;
-    bottom: calc(150px + 110px); /* 150px — высота input-блока + 10px отступ */
-    z-index: 0; /* чтобы было выше хедера */
+    bottom: 200px; /* фиксированная высота input-блока + отступ */
     border-radius: 12px;
     background: #fff;
     border: 1px solid #ddd;
@@ -115,15 +47,7 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
-}
-
-.preview-body {
-    flex: 1;
-    padding: 1rem;
-    overflow-y: auto;
-    font-size: 0.95rem;
-    color: #444;
-    white-space: pre-wrap;
+    z-index: 0;
 }
 
 .preview-header {
@@ -133,6 +57,15 @@
     padding: 0.75rem 1rem;
     background-color: #f2f2f2;
     border-bottom: 1px solid #ddd;
+}
+
+.preview-body {
+    flex: 1;
+    padding: 1rem;
+    overflow-y: auto;
+    font-size: 0.95rem;
+    color: #444;
+    white-space: pre-wrap;
 }
 
 .window-controls {
@@ -147,24 +80,14 @@
     display: inline-block;
 }
 
-.red {
-    background-color: #ff5f56;
-}
-
-.yellow {
-    background-color: #ffbd2e;
-}
-
-.green {
-    background-color: #27c93f;
-}
+.red { background-color: #ff5f56; }
+.yellow { background-color: #ffbd2e; }
+.green { background-color: #27c93f; }
 
 .title {
     font-weight: 600;
     font-size: 0.95rem;
     color: #333;
-    margin-left: auto;
-    margin-right: auto;
     position: absolute;
     left: 0;
     right: 0;
@@ -172,27 +95,20 @@
     pointer-events: none;
 }
 
-.preview-body {
-    padding: 1rem;
-    font-size: 0.95rem;
-    color: #444;
-    white-space: pre-wrap;
-}
 .input-block {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
     position: absolute;
-    bottom: 20px;
-    left: var(--sidebar-left, 310px);
+    bottom: 0px;
+    left: var(--sidebar-left, 290px);
     right: var(--settings-right, 360px);
     background: #fff;
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
 }
 
-/* область вложений */
 .input-attachments {
     min-height: 24px;
     display: flex;
@@ -200,36 +116,71 @@
     gap: 0.5rem;
 }
 
-/* область тегов */
 .input-tags {
-    min-height: 24px;
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
+    min-height: 24px;
 }
 
-/* текстовое поле */
+.input-row {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    width: 100%;
+}
+
 .input-textarea-wrapper {
+    position: relative;
+    flex: 1;
     max-height: 150px;
     overflow-y: auto;
-    border: 1px solid #ddd;
-    border-radius: 8px;
 }
 
 .input-textarea-wrapper textarea {
-    width: 100%;
-    border: none;
-    resize: none;
-    padding: 0.75rem;
-    font-size: 1rem;
+    width: calc(100% - 50px);
+    border: 1px solid #ddd;
     border-radius: 8px;
+    padding: 0.75rem 1.5rem 0.75rem 0.75rem; /* Уменьшение отступа справа */
+    font-size: 1rem;
     box-sizing: border-box;
     outline: none;
+    resize: none;
 }
 
-/* нижняя панель с кнопками */
-.input-buttons {
-    display: flex;
-    justify-content: flex-end;
-    gap: 0.5rem;
+.clear-button {
+    position: absolute;
+    top: 0rem;
+    right: 3rem;
+    background-color: transparent;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: #888;
+    z-index: 1;
+}
+
+.clear-button:hover {
+    color: #333;
+    background-color: #eee;
+    border-radius: 1px;
+}
+
+.send-button {
+    position: absolute;
+    top: 60%;
+    right: 0.75rem;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: #2f80ed;
+    color: #fff;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.send-button:hover {
+    background-color: #1a65d6;
 }

@@ -55,7 +55,7 @@ const PromptEditor: React.FC<PromptEditorProps> = ({ prompt }) => {
                 setMessages(prev => [...prev, { role: 'user', content: query }, { role: 'assistant', content: 'Ошибка при получении ответа' }]);
             } else {
                 setMessages(prev => [...prev, { role: 'user', content: query }, { role: 'assistant', content: data.text }]);
-                setQuery('');
+                //setQuery(''); - очистака поля запроса
             }
         } catch (err) {
             console.error('Ошибка в try-catch:', err);
@@ -70,9 +70,9 @@ const PromptEditor: React.FC<PromptEditorProps> = ({ prompt }) => {
             <div className="preview-window">
                 <div className="preview-header">
                     <div className="window-controls">
-                        <span className="dot red" />
-                        <span className="dot yellow" />
-                        <span className="dot green" />
+                        <span className="dot red"/>
+                        <span className="dot yellow"/>
+                        <span className="dot green"/>
                     </div>
                     <span className="title">Превью ответа</span>
                 </div>
@@ -96,17 +96,24 @@ const PromptEditor: React.FC<PromptEditorProps> = ({ prompt }) => {
                 <div className="input-attachments">
                     <span>📎 Вложения</span>
                 </div>
-                <div className="input-tags">
-                    <span className="tag">Здесь будут теги, можно позже реализовать</span>
-                </div>
+
+
                 <div className="input-textarea-wrapper">
-                    <textarea
-                        className="chat-textarea"
-                        placeholder="Введите свой запрос..."
-                        value={query}
-                        onChange={(e) => setQuery(e.target.value)}
-                    />
+    <textarea
+        className="chat-textarea"
+        placeholder="Введите свой запрос..."
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+    />
+                    <button
+                        className="clear-button"
+                        onClick={() => setQuery('')}
+                        title="Очистить"
+                    >
+                        ✖
+                    </button>
                 </div>
+
                 <div className="input-buttons">
                     <button
                         className="send-button"

@@ -7,23 +7,27 @@
     z-index: 1000;
     background: #fff;
     border-left: 1px solid #ddd;
-    padding: 2rem;
+    padding: 0.75rem 0.5rem;
     padding-bottom: 6rem;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 0.5rem;
     box-shadow: -2px 0 8px rgba(0,0,0,0.05);
     border-radius: 16px 0 0 16px;
 }
 
-h3 {
-    font-size: 1.2rem;
+.settings-sidebar h3, h4, label {
+    font-size: 0.8rem;
     font-weight: 600;
-    margin-bottom: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+}
+
+.settings-sidebar h3, h4 {
+    font-weight: 500;
+}
+
+h4 {
+    margin-bottom: 0.5rem;
 }
 
 label {
@@ -31,14 +35,16 @@ label {
     font-weight: 600;
     color: #555;
     text-transform: uppercase;
+    margin-top: 0.5rem;
+    margin-bottom: 0.25rem;
 }
 
 input,
 textarea {
     width: 100%;
     font-size: 1rem;
-    padding: 0.75rem;
-    border: 1px solid #ccc;
+    padding: 0.75rem 1rem;
+    border: 1px solid #ddd;
     border-radius: 8px;
     background: white;
     resize: vertical;
@@ -46,24 +52,30 @@ textarea {
     margin-top: 0.25rem;
 }
 
-textarea {
-    min-height: 100px;
-    max-height: 300px;
-}
-
 .settings-section {
     background: #fff;
-    border-radius: 12px;
-    padding: 1rem;
+    border-radius: 8px;
+    padding: 0.4rem 0.5rem;
     box-shadow: 0 0 0 1px #e0e0e0;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.4rem;
+    border: 1px solid #ddd;
 }
 
 .params-list {
     padding-left: 1rem;
     font-size: 0.95rem;
+}
+
+.params-list li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.25rem 0;
+    border-bottom: 1px solid #eee;
+    font-size: 0.95rem;
+    font-weight: normal;
 }
 
 .no-params {
@@ -73,10 +85,11 @@ textarea {
 }
 
 .sidebar-header {
+    background: #fff;
+    padding: 0rem 0.5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1rem;
 }
 
 .sidebar-header h3 {
@@ -103,11 +116,11 @@ textarea {
     margin-top: auto;
     background: #f9f9f9;
     border: 1px solid #e0e0e0;
-    padding: 1rem;
+    padding: 0.75rem;
     border-radius: 12px;
     max-height: 200px;
     overflow-y: auto;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     color: #333;
 }
 
@@ -118,7 +131,7 @@ textarea {
     width: 350px;
     background: #fff;
     border-top: 1px solid #ddd;
-    padding: 1rem;
+    padding: 0.75rem;
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -162,4 +175,107 @@ textarea {
 
 .mic-button:hover {
     color: #333;
+}
+
+.slider-toggle {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 20px;
+}
+
+.slider-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider-toggle::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 40px;
+    height: 20px;
+    background-color: #ccc;
+    border-radius: 34px;
+    transition: 0.4s;
+}
+
+.slider-toggle::after {
+    content: "";
+    position: absolute;
+    height: 16px;
+    width: 16px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    border-radius: 50%;
+    transition: 0.4s;
+}
+
+.slider-toggle input:checked + .slider-toggle::before {
+    background-color: #2f80ed;
+}
+
+.slider-toggle input:checked + .slider-toggle::after {
+    transform: translateX(20px);
+}
+
+
+/* === Custom input group styles === */
+.input-group {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.input-group input,
+.input-group textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: white;
+  resize: vertical;
+  line-height: 1.5;
+  margin-top: 0.25rem;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.input-group input:focus,
+.input-group textarea:focus {
+  border-color: #0070f3;
+  box-shadow: 0 0 0 2px rgba(0, 112, 243, 0.2);
+}
+
+.input-group label {
+  position: absolute;
+  top: 50%;
+  left: 1rem;
+  transform: translateY(-50%);
+  background: #fff;
+  padding: 0 0.25rem;
+  color: #888;
+  pointer-events: none;
+  transition: 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.input-group input:focus + label,
+.input-group textarea:focus + label,
+.input-group input:not(:placeholder-shown) + label,
+.input-group textarea:not(:placeholder-shown) + label {
+  top: -0.6rem;
+  left: 0.75rem;
+  font-size: 0.75rem;
+  color: #0070f3;
+}
+
+.input-group small {
+  font-size: 0.8rem;
+  color: #777;
+  margin-top: 0.25rem;
+  display: block;
 }

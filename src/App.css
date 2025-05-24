@@ -10,8 +10,8 @@
 html, body, #root {
     height: 100%;
     overflow-x: hidden;
-    font-family: system-ui, sans-serif;
-    background: #111111; /*#f7f9fc*/
+    font-family: 'Inter', system-ui, sans-serif;
+    background: #f7f9fc; /*#f7f9fc*/
     color: #111;
     line-height: 1.5;
 }
